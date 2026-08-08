@@ -39,25 +39,18 @@ g_{\mathrm{FW}}(x_k)=\nabla f(x_k)^\top(x_k-s_k).
 Clone the repository and enter the project directory:
 
 ```bash
-git clone <REPOSITORY-URL>
-cd OR
-```
+git clone https://github.com/Tobias-Dobler-KIT/Animation_for_the_Franke-Wolfe-Algorithm
+cd Animation_for_the_Franke-Wolfe-Algorithm
 
 Create a virtual environment and install the dependencies:
 
-```bash
 python3 -m venv .venv
 source .venv/bin/activate
 python -m pip install --upgrade pip
 python -m pip install numpy matplotlib pillow
-```
 
 On Windows, activate the virtual environment with `.venv\Scripts\activate`.
 
-## Usage
-
-```bash
-cd Animation_for_the_Franke-Wolfe-Algorithm
 python franke_wolfe.py
 ```
 
