@@ -88,44 +88,6 @@ def objective(x1, x2):
 
 Using NumPy operations in the objective function improves rendering performance, but regular scalar Python functions are supported as well. If no analytical gradient is supplied, the program approximates it automatically using central finite differences.
 
-## Programmatic usage
-
-The animation can be created without displaying a window or exporting a GIF:
-
-```python
-from franke_wolfe import run_animation
-
-animation = run_animation(save=False, show=False)
-```
-
-Define a custom problem with `FrankWolfeProblem`:
-
-```python
-import numpy as np
-
-from franke_wolfe import FrankWolfeProblem, run_animation
-
-
-def objective(x1, x2):
-    return (x1 - 0.3) ** 2 + 2 * (x2 - 0.6) ** 2
-
-
-problem = FrankWolfeProblem(
-    objective=objective,
-    domain=np.array([
-        [0.0, 0.0],
-        [1.0, 0.0],
-        [1.0, 1.0],
-        [0.0, 1.0],
-    ]),
-    start=np.array([0.8, 0.2]),
-)
-
-run_animation(problem=problem, tolerance=1e-3)
-```
-
-An analytical gradient can optionally be passed through the `gradient` argument when creating a `FrankWolfeProblem`.
-
 ## Implementation details
 
 - The linear Frank-Wolfe subproblem is solved by evaluating the vertices of the polygon.
@@ -138,6 +100,5 @@ An analytical gradient can optionally be passed through the `gradient` argument 
 ```text
 .
 ├── README.md
-└── Animation_for_the_Franke-Wolfe-Algorithm/
-    └── franke_wolfe.py
+└── franke_wolfe.py
 ```
