@@ -26,19 +26,19 @@ from mpl_toolkits.mplot3d import art3d
 # ---------------------------------------------------------------------------
 DOMAIN = np.array([
     [0, 0],
-    [1, 0],
-    [0, 1],
+    [4, 0],
+    [0, 4],
     
 ])
 
 # Desired starting point inside DOMAIN.
 # Set START_POINT = None to use the centroid of the vertices automatically.
-START_POINT = np.array([0.2, 0.32])
+START_POINT = np.array([0, 0])
 
 
 def objective(x1, x2):
     """Enter the desired objective function f(x1, x2) here."""
-    return   6*(0*(x1-0.5)**2 + (x2-0.5)**2) +6
+    return   x1**2 + x2**2 -4*x1 -6*x2 +12
 
 
 # Stop once the Frank-Wolfe gap is smaller than this tolerance.
@@ -463,7 +463,7 @@ class FrankWolfePlot:
         self._text(
             x[0] + 0.02 * self.x_span, x[1],
             value + 0.06 * self.z_span,
-            rf"$x_{step['k']}$", "black", 16,
+            rf"$x_{{{step['k']}}}$", "black", 16,
         )
 
     def _draw_fw_point(self, step):
@@ -476,7 +476,7 @@ class FrankWolfePlot:
             y[0] - 0.06 * self.x_span,
             y[1] - 0.02 * self.y_span,
             self.floor_z + 0.03 * self.z_span,
-            rf"$s_{step['k']}$", "darkgreen", 16,
+            rf"$s_{{{step['k']}}}$", "darkgreen", 16,
         )
 
     def _draw_direction(self, step):
@@ -491,7 +491,8 @@ class FrankWolfePlot:
         self._text(
             midpoint[0], midpoint[1] - 0.04 * self.y_span,
             self.floor_z + 0.04 * self.z_span,
-            rf"$d_{step['k']}=s_{step['k']}-x_{step['k']}$", "green", 13,
+            rf"$d_{{{step['k']}}}=s_{{{step['k']}}}-x_{{{step['k']}}}$",
+            "green", 13,
         )
 
     def _draw_tangent_plane(self, step):
@@ -531,7 +532,7 @@ class FrankWolfePlot:
             (
                 r"$\min_{\alpha \in [0,1]} f(x+\alpha(s-x))$"
                 "\n"
-                rf"$\alpha_{step['k']}={step['gamma']:.3f}$"
+                rf"$\alpha_{{{step['k']}}}={step['gamma']:.3f}$"
             ),
             transform=self.ax.transAxes,
             horizontalalignment="right",
@@ -562,7 +563,7 @@ class FrankWolfePlot:
             x[0] + 0.02 * self.x_span,
             x[1] + 0.01 * self.y_span,
             value + 0.075 * self.z_span,
-            rf"$x_{step['k'] + 1}$", "darkorange", 16,
+            rf"$x_{{{step['k'] + 1}}}$", "darkorange", 16,
         )
 
     def _draw_history(self, last_iteration):
@@ -651,14 +652,14 @@ class FrankWolfePlot:
 
         titles = {
             "x": (
-                rf"Iteration {iteration}: current point $x_{iteration}$ "
+                rf"Iteration {iteration}: current point $x_{{{iteration}}}$ "
                 rf"$(g_{{FW}}={step['fw_gap']:.1e})$"
             ),
-            "plane": rf"Iteration {iteration}: linearization at $x_{iteration}$",
-            "fw_point": rf"Iteration {iteration}: Frank-Wolfe point $s_{iteration}$",
-            "direction": rf"Iteration {iteration}: direction $d_{iteration}=s_{iteration}-x_{iteration}$",
+            "plane": rf"Iteration {iteration}: linearization at $x_{{{iteration}}}$",
+            "fw_point": rf"Iteration {iteration}: Frank-Wolfe point $s_{{{iteration}}}$",
+            "direction": rf"Iteration {iteration}: direction $d_{{{iteration}}}=s_{{{iteration}}}-x_{{{iteration}}}$",
             "line_search": rf"Iteration {iteration}: numerical line search",
-            "new_point": rf"Iteration {iteration}: new point $x_{iteration + 1}$",
+            "new_point": rf"Iteration {iteration}: new point $x_{{{iteration + 1}}}$",
         }
         self.ax.set_title(titles[stage], fontsize=15, pad=18)
         return self.dynamic_artists
